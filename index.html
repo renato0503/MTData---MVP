@@ -1,542 +1,566 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MTData - Dashboard de Eventos</title>
-    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTData - Intelligence Dashboard</title>
+
     <!-- 1. Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- 2. Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- 3. Styles -->
-    <style>
-      body {
-        font-family: 'Inter', sans-serif;
-        background-color: #0f172a; /* Slate 900 */
-        color: #f8fafc; /* Slate 50 */
-      }
-      ::-webkit-scrollbar { width: 8px; }
-      ::-webkit-scrollbar-track { background: #1e293b; }
-      ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
-      ::-webkit-scrollbar-thumb:hover { background: #64748b; }
-      
-      /* Loading Animation */
-      .loader {
-        border: 4px solid #1e293b;
-        border-top: 4px solid #34d399;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
-        margin: 20px auto;
-      }
-      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-      
-      #error-container { display: none; padding: 20px; background: #450a0a; color: #fecaca; margin: 20px; border-radius: 8px; border: 1px solid #f87171; }
-    </style>
 
-    <!-- 4. Environment Shim (CRITICAL: Must run before imports) -->
-    <script>
-      window.process = {
-        env: {
-          NODE_ENV: 'production',
-          // Insira sua API KEY aqui para testar
-          API_KEY: '' 
-        }
-      };
-      
-      // Error Trap
-      window.onerror = function(message, source, lineno, colno, error) {
-        const el = document.getElementById('error-container');
-        if(el) {
-            el.style.display = 'block';
-            el.innerHTML = `<strong>Erro Detectado:</strong><br>${message}<br><small>${source}:${lineno}</small>`;
-        }
-      };
+    <!-- 2. React & ReactDOM (Versões Globais UMD) -->
+    <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+
+    <!-- 3. Dependências do Recharts -->
+    <!-- CRÍTICO: Recharts UMD precisa do prop-types global -->
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>
+    
+    <!-- 4. Recharts -->
+    <script src="https://unpkg.com/recharts@2.10.3/umd/Recharts.js"></script>
+
+    <!-- 5. Babel (Compilador) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- 6. Markdown Parser -->
+    <script src="https://unpkg.com/markdown-it@14.0.0/dist/markdown-it.min.js"></script>
+
+    <!-- 7. Google GenAI (Carregamento Módulo ES) -->
+    <script type="module">
+        import { GoogleGenAI } from "https://esm.sh/@google/genai@0.1.1";
+        window.GoogleGenAI = GoogleGenAI;
     </script>
 
-    <!-- 5. Import Map -->
-    <script type="importmap">
+    <!-- Fonte Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; }
+        /* Scrollbar Personalizada */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        
+        .loader {
+            border: 4px solid #1e293b;
+            border-top: 4px solid #10b981;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+<script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@18.2.0?dev",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client?dev",
-    "lucide-react": "https://esm.sh/lucide-react@0.344.0",
-    "recharts": "https://esm.sh/recharts@2.12.2?external=react,react-dom",
-    "react-markdown": "https://esm.sh/react-markdown@9.0.1?external=react,react-dom",
-    "@google/genai": "https://esm.sh/@google/genai@0.1.1",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
-    "react/": "https://aistudiocdn.com/react@^19.2.1/"
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.31.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
+    "react-markdown": "https://aistudiocdn.com/react-markdown@^10.1.0"
   }
 }
 </script>
-
-    <!-- 6. Babel Standalone -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  </head>
-  <body>
-    <div id="error-container"></div>
+</head>
+<body>
     <div id="root">
-        <div style="text-align: center; padding-top: 50px;">
+        <div style="height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <div class="loader"></div>
-            <p style="color: #94a3b8;">Carregando sistema MTData...</p>
+            <p style="margin-top: 20px; color: #94a3b8;">Carregando MTData...</p>
         </div>
     </div>
 
-    <!-- 7. MAIN APPLICATION CODE -->
-    <script type="text/babel" data-type="module">
-      import React, { useState, useEffect } from 'react';
-      import ReactDOM from 'react-dom/client';
-      import { Filter, Download, Sparkles, Users, DollarSign, MapPin, ArrowUpRight, ArrowDownRight } from 'lucide-react';
-      import { 
-        BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
-        PieChart, Pie, Legend
-      } from 'recharts';
-      import ReactMarkdown from 'react-markdown';
-      import { GoogleGenAI } from "@google/genai";
+    <!-- SCRIPT DA APLICAÇÃO -->
+    <script type="text/babel">
+        // --- 1. SETUP E UTILITÁRIOS ---
+        
+        // Atalhos para React
+        const { useState, useEffect, useMemo } = React;
+        const md = window.markdownit();
 
-      // --- CONFIG & TYPES ---
-      const LoadingState = {
-        IDLE: 'IDLE',
-        LOADING: 'LOADING',
-        SUCCESS: 'SUCCESS',
-        ERROR: 'ERROR'
-      };
-
-      // --- MOCK DATABASE (DADOS) ---
-      const EVENT_DATABASE = {
-        'guns-n-roses': {
-          id: 'guns-n-roses',
-          name: "Show Guns N' Roses - Arena Pantanal",
-          city: 'Cuiabá',
-          kpis: [
-            { id: '1', label: 'Público Estimado', value: '32.500', change: 15.4, iconName: 'Users' },
-            { id: '2', label: 'Gasto Médio Turista', value: 'R$ 1.450,00', change: 22.1, iconName: 'DollarSign' },
-            { id: '3', label: '% Turistas de Fora', value: '42%', change: 12.5, iconName: 'MapPin' },
-          ],
-          motivations: [
-            { reason: 'Show Exclusivo', percentage: 85 },
-            { reason: 'Turismo/Lazer', percentage: 10 },
-            { reason: 'Visita a Amigos', percentage: 5 },
-          ],
-          spending: [
-            { category: 'Ingressos', amount: 650 },
-            { category: 'Hospedagem', amount: 400 },
-            { category: 'Alimentação', amount: 250 },
-            { category: 'Transporte', amount: 150 },
-          ],
-          origins: [
-            { state: 'Mato Grosso (Interior)', participants: 12500, avgSpend: 850, stayDays: 2.0 },
-            { state: 'São Paulo', participants: 4200, avgSpend: 2100, stayDays: 3.5 },
-            { state: 'Goiás', participants: 3100, avgSpend: 1200, stayDays: 2.5 },
-            { state: 'Mato Grosso do Sul', participants: 2800, avgSpend: 1100, stayDays: 2.0 },
-          ]
-        },
-        'stock-car': {
-          id: 'stock-car',
-          name: "Stock Car Pro Series",
-          city: 'Cuiabá',
-          kpis: [
-            { id: '1', label: 'Público Circulante', value: '18.000', change: 5.2, iconName: 'Users' },
-            { id: '2', label: 'Gasto Médio Turista', value: 'R$ 1.100,00', change: 3.8, iconName: 'DollarSign' },
-            { id: '3', label: '% Corporativo/VIP', value: '28%', change: 8.4, iconName: 'MapPin' },
-          ],
-          motivations: [
-            { reason: 'Evento Esportivo', percentage: 60 },
-            { reason: 'Networking/Corporativo', percentage: 30 },
-            { reason: 'Lazer', percentage: 10 },
-          ],
-          spending: [
-            { category: 'Hospedagem', amount: 500 },
-            { category: 'Alimentação', amount: 350 },
-            { category: 'Transporte Local', amount: 150 },
-            { category: 'Ingressos', amount: 100 },
-          ],
-          origins: [
-            { state: 'Mato Grosso (Capital)', participants: 10000, avgSpend: 300, stayDays: 1.0 },
-            { state: 'Paraná', participants: 1500, avgSpend: 1800, stayDays: 4.0 },
-            { state: 'São Paulo', participants: 1200, avgSpend: 2200, stayDays: 3.0 },
-            { state: 'Distrito Federal', participants: 800, avgSpend: 1500, stayDays: 2.5 },
-          ]
-        },
-        'natanzinho': {
-          id: 'natanzinho',
-          name: "Show Natanzinho",
-          city: 'Várzea Grande',
-          kpis: [
-            { id: '1', label: 'Público Total', value: '12.000', change: -2.1, iconName: 'Users' },
-            { id: '2', label: 'Gasto Médio', value: 'R$ 450,00', change: -5.5, iconName: 'DollarSign' },
-            { id: '3', label: '% Público Local', value: '85%', change: 4.2, iconName: 'MapPin' },
-          ],
-          motivations: [
-            { reason: 'Fã do Artista', percentage: 70 },
-            { reason: 'Diversão com Amigos', percentage: 25 },
-            { reason: 'Outros', percentage: 5 },
-          ],
-          spending: [
-            { category: 'Bebidas/Bar', amount: 200 },
-            { category: 'Ingresso', amount: 120 },
-            { category: 'Alimentação', amount: 80 },
-            { category: 'Transporte App', amount: 50 },
-          ],
-          origins: [
-            { state: 'Várzea Grande', participants: 6000, avgSpend: 250, stayDays: 1.0 },
-            { state: 'Cuiabá', participants: 4500, avgSpend: 300, stayDays: 1.0 },
-            { state: 'MT (Baixada Cuiabana)', participants: 1500, avgSpend: 500, stayDays: 1.5 },
-            { state: 'Outros', participants: 0, avgSpend: 0, stayDays: 0 },
-          ]
-        },
-        'gustavo-lima': {
-          id: 'gustavo-lima',
-          name: "Buteco do Gustavo Lima",
-          city: 'Cuiabá',
-          kpis: [
-            { id: '1', label: 'Público Total', value: '25.000', change: 10.0, iconName: 'Users' },
-            { id: '2', label: 'Gasto Médio', value: 'R$ 780,00', change: 4.1, iconName: 'DollarSign' },
-            { id: '3', label: '% Interior MT', value: '45%', change: 15.2, iconName: 'MapPin' },
-          ],
-          motivations: [
-            { reason: 'Show Sertanejo', percentage: 80 },
-            { reason: 'Encontro Social', percentage: 15 },
-            { reason: 'Negócios (Agro)', percentage: 5 },
-          ],
-          spending: [
-            { category: 'Consumo Evento', amount: 350 },
-            { category: 'Ingresso/Camarote', amount: 250 },
-            { category: 'Hospedagem', amount: 100 },
-            { category: 'Transporte', amount: 80 },
-          ],
-          origins: [
-            { state: 'Cuiabá', participants: 10000, avgSpend: 400, stayDays: 1.0 },
-            { state: 'Sorriso/Sinop', participants: 5000, avgSpend: 1200, stayDays: 2.0 },
-            { state: 'Rondonópolis', participants: 4000, avgSpend: 900, stayDays: 1.5 },
-            { state: 'Primavera do Leste', participants: 2500, avgSpend: 1000, stayDays: 2.0 },
-          ]
-        },
-        'cuiaba-flamengo': {
-          id: 'cuiaba-flamengo',
-          name: "Cuiabá EC x Flamengo (Brasileirão)",
-          city: 'Cuiabá',
-          kpis: [
-            { id: '1', label: 'Público Pagante', value: '41.200', change: 35.0, iconName: 'Users' },
-            { id: '2', label: 'Ticket Médio', value: 'R$ 320,00', change: -10.5, iconName: 'DollarSign' },
-            { id: '3', label: '% Torcida Visitante', value: '35%', change: 20.0, iconName: 'MapPin' },
-          ],
-          motivations: [
-            { reason: 'Paixão pelo Time', percentage: 90 },
-            { reason: 'Lazer em Família', percentage: 8 },
-            { reason: 'Conhecer a Arena', percentage: 2 },
-          ],
-          spending: [
-            { category: 'Ingresso', amount: 150 },
-            { category: 'Alimentação/Bebida', amount: 100 },
-            { category: 'Transporte', amount: 40 },
-            { category: 'Souvenirs/Camisas', amount: 30 },
-          ],
-          origins: [
-            { state: 'Mato Grosso', participants: 35000, avgSpend: 200, stayDays: 1.0 },
-            { state: 'Rio de Janeiro', participants: 2000, avgSpend: 1800, stayDays: 3.0 },
-            { state: 'Rondônia/Acre', participants: 1500, avgSpend: 900, stayDays: 2.0 },
-            { state: 'Outros Estados', participants: 2700, avgSpend: 1100, stayDays: 2.5 },
-          ]
-        },
-        'festival-inverno': {
-          id: 'festival-inverno',
-          name: "Festival de Inverno",
-          city: 'Chapada dos Guimarães',
-          kpis: [
-            { id: '1', label: 'Fluxo Turístico', value: '65.000', change: 5.0, iconName: 'Users' },
-            { id: '2', label: 'Gasto Médio/Dia', value: 'R$ 550,00', change: 12.0, iconName: 'DollarSign' },
-            { id: '3', label: 'Ocupação Hoteleira', value: '98%', change: 2.0, iconName: 'MapPin' },
-          ],
-          motivations: [
-            { reason: 'Shows Nacionais', percentage: 50 },
-            { reason: 'Clima/Natureza', percentage: 30 },
-            { reason: 'Gastronomia', percentage: 20 },
-          ],
-          spending: [
-            { category: 'Hospedagem (Pousadas/Casas)', amount: 250 },
-            { category: 'Alimentação', amount: 150 },
-            { category: 'Passeios', amount: 100 },
-            { category: 'Artesanato/Compras', amount: 50 },
-          ],
-          origins: [
-            { state: 'Cuiabá/Várzea Grande', participants: 45000, avgSpend: 300, stayDays: 1.5 },
-            { state: 'Interior MT', participants: 10000, avgSpend: 800, stayDays: 2.5 },
-            { state: 'Outros Estados', participants: 5000, avgSpend: 1500, stayDays: 4.0 },
-            { state: 'Estrangeiros', participants: 100, avgSpend: 2500, stayDays: 5.0 },
-          ]
-        }
-      };
-
-      // --- SERVICES ---
-      const getAiClient = () => {
-        return new GoogleGenAI({ apiKey: window.process.env.API_KEY });
-      };
-
-      const generateDashboardInsights = async (kpis, motivations, spending, eventName) => {
-        const ai = getAiClient();
-        const prompt = `
-          Atue como um Especialista em Inteligência de Dados de Turismo.
-          Analise os seguintes dados do evento "${eventName}" em Cuiabá:
-          KPIs: ${JSON.stringify(kpis)}
-          Motivação: ${JSON.stringify(motivations)}
-          Gastos: ${JSON.stringify(spending)}
-          Forneça um resumo executivo curto (máximo 3 parágrafos) destacando:
-          1. Perfil econômico. 2. Eficácia turística. 3. Recomendação estratégica.
-          Use formatação Markdown.
-        `;
-        try {
-          const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: prompt,
-          });
-          return response.text || "Sem insights disponíveis.";
-        } catch (error) {
-          console.error(error);
-          return "Erro ao conectar com a IA. Verifique se a API Key foi inserida na linha 35 do HTML.";
-        }
-      };
-
-      // --- COMPONENTS ---
-
-      // KPICard
-      const KPICard = ({ data }) => {
-        const getIcon = () => {
-          switch (data.iconName) {
-            case 'Users': return <Users className="w-6 h-6 text-emerald-400" />;
-            case 'DollarSign': return <DollarSign className="w-6 h-6 text-blue-400" />;
-            case 'MapPin': return <MapPin className="w-6 h-6 text-purple-400" />;
-            default: return <Users className="w-6 h-6 text-gray-400" />;
-          }
-        };
-        const isPositive = data.change >= 0;
-        return (
-          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg transition-transform hover:scale-[1.02] duration-300">
-            <div className="flex justify-between items-start mb-4">
-              <div className="p-3 bg-slate-900 rounded-lg border border-slate-700">{getIcon()}</div>
-              <div className={`flex items-center text-sm font-medium ${isPositive ? 'text-emerald-400' : 'text-rose-400'}`}>
-                {isPositive ? <ArrowUpRight className="w-4 h-4 mr-1" /> : <ArrowDownRight className="w-4 h-4 mr-1" />}
-                {Math.abs(data.change)}% vs. anterior
-              </div>
-            </div>
-            <div>
-              <p className="text-slate-400 text-sm font-medium uppercase tracking-wider">{data.label}</p>
-              <h3 className="text-3xl font-bold text-slate-100 mt-1">{data.value}</h3>
-            </div>
-          </div>
-        );
-      };
-
-      // ChartsSection
-      const COLORS = ['#34d399', '#60a5fa', '#a78bfa', '#f472b6', '#fbbf24'];
-      const CustomTooltip = ({ active, payload, label }) => {
-        if (active && payload && payload.length) {
-          return (
-            <div className="bg-slate-900 border border-slate-700 p-3 rounded shadow-xl">
-              <p className="text-slate-200 font-semibold">{`${label || payload[0].name}: ${payload[0].value}${typeof payload[0].value === 'number' && payload[0].value > 100 ? '' : '%'}`}</p>
-            </div>
-          );
-        }
-        return null;
-      };
-
-      const ChartsSection = ({ motivationData, spendData }) => {
-        return (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg">
-              <h4 className="text-lg font-semibold text-slate-100 mb-6 flex items-center">
-                <span className="w-1 h-6 bg-emerald-500 rounded mr-3"></span>
-                Motivação Principal
-              </h4>
-              <div className="h-64 w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart layout="vertical" data={motivationData} margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" horizontal={false} />
-                    <XAxis type="number" stroke="#94a3b8" />
-                    <YAxis type="category" dataKey="reason" stroke="#f8fafc" width={120} tick={{fontSize: 12}} />
-                    <Tooltip content={<CustomTooltip />} cursor={{fill: '#334155', opacity: 0.4}} />
-                    <Bar dataKey="percentage" radius={[0, 4, 4, 0]}>
-                      {motivationData.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-            <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg">
-              <h4 className="text-lg font-semibold text-slate-100 mb-6 flex items-center">
-                <span className="w-1 h-6 bg-blue-500 rounded mr-3"></span>
-                Distribuição de Gastos
-              </h4>
-              <div className="h-64 w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie data={spendData} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="amount" nameKey="category">
-                      {spendData.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
-                    </Pie>
-                    <Tooltip content={<CustomTooltip />} />
-                    <Legend verticalAlign="middle" align="right" layout="vertical" wrapperStyle={{ color: '#94a3b8' }} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
-        );
-      };
-
-      // --- MAIN APP ---
-      const App = () => {
-        const [selectedEventId, setSelectedEventId] = useState('guns-n-roses');
-        const [data, setData] = useState(EVENT_DATABASE['guns-n-roses']);
-        const [aiInsights, setAiInsights] = useState('');
-        const [aiLoading, setAiLoading] = useState(LoadingState.IDLE);
-
-        useEffect(() => {
-          if (EVENT_DATABASE[selectedEventId]) {
-            setData(EVENT_DATABASE[selectedEventId]);
-            setAiInsights('');
-            setAiLoading(LoadingState.IDLE);
-          }
-        }, [selectedEventId]);
-
-        const handleExport = () => {
-          alert(`Exportação simulada: ${data.name.toUpperCase()}`);
+        // Configuração da API KEY (Edite aqui para GitHub Pages)
+        const ENV = {
+            API_KEY: '' // <--- INSIRA SUA CHAVE AQUI
         };
 
-        const handleGenerateInsights = async () => {
-          if (!window.process.env.API_KEY) {
-              alert("Por favor, configure sua API Key no código (linha 35) para usar a IA.");
-              return;
-          }
-          setAiLoading(LoadingState.LOADING);
-          const insights = await generateDashboardInsights(data.kpis, data.motivations, data.spending, data.name);
-          setAiInsights(insights);
-          setAiLoading(LoadingState.SUCCESS);
+        // --- 2. ÍCONES (SVG Inline - Mais leve e sem erros de importação) ---
+        const IconUsers = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>;
+        const IconDollar = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>;
+        const IconMapPin = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>;
+        const IconFilter = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>;
+        const IconDownload = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>;
+        const IconSparkles = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M9 5H5"/><path d="M3 7.207V3h4.207"/></svg>;
+        const IconArrowUp = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>;
+        const IconArrowDown = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M7 7h10v10"/><path d="M7 17 17 7" transform="rotate(90 12 12)"/></svg>;
+
+        // --- 3. DADOS (Mato Grosso Database) ---
+        const EVENT_DATABASE = {
+            'guns-n-roses': {
+                id: 'guns-n-roses',
+                name: "Show Guns N' Roses - Arena Pantanal",
+                city: 'Cuiabá',
+                kpis: [
+                    { id: '1', label: 'Público Estimado', value: '32.500', change: 15.4, iconName: 'Users' },
+                    { id: '2', label: 'Gasto Médio Turista', value: 'R$ 1.450,00', change: 22.1, iconName: 'DollarSign' },
+                    { id: '3', label: '% Turistas de Fora', value: '42%', change: 12.5, iconName: 'MapPin' },
+                ],
+                motivations: [
+                    { reason: 'Show Exclusivo', percentage: 85 },
+                    { reason: 'Turismo/Lazer', percentage: 10 },
+                    { reason: 'Visita a Amigos', percentage: 5 },
+                ],
+                spending: [
+                    { category: 'Ingressos', amount: 650 },
+                    { category: 'Hospedagem', amount: 400 },
+                    { category: 'Alimentação', amount: 250 },
+                    { category: 'Transporte', amount: 150 },
+                ],
+                origins: [
+                    { state: 'Mato Grosso (Interior)', participants: 12500, avgSpend: 850, stayDays: 2.0 },
+                    { state: 'São Paulo', participants: 4200, avgSpend: 2100, stayDays: 3.5 },
+                    { state: 'Goiás', participants: 3100, avgSpend: 1200, stayDays: 2.5 },
+                    { state: 'Mato Grosso do Sul', participants: 2800, avgSpend: 1100, stayDays: 2.0 },
+                ]
+            },
+            'stock-car': {
+                id: 'stock-car',
+                name: "Stock Car Pro Series",
+                city: 'Cuiabá',
+                kpis: [
+                    { id: '1', label: 'Público Circulante', value: '18.000', change: 5.2, iconName: 'Users' },
+                    { id: '2', label: 'Gasto Médio Turista', value: 'R$ 1.100,00', change: 3.8, iconName: 'DollarSign' },
+                    { id: '3', label: '% Corporativo/VIP', value: '28%', change: 8.4, iconName: 'MapPin' },
+                ],
+                motivations: [
+                    { reason: 'Evento Esportivo', percentage: 60 },
+                    { reason: 'Networking/Corporativo', percentage: 30 },
+                    { reason: 'Lazer', percentage: 10 },
+                ],
+                spending: [
+                    { category: 'Hospedagem', amount: 500 },
+                    { category: 'Alimentação', amount: 350 },
+                    { category: 'Transporte Local', amount: 150 },
+                    { category: 'Ingressos', amount: 100 },
+                ],
+                origins: [
+                    { state: 'Mato Grosso (Capital)', participants: 10000, avgSpend: 300, stayDays: 1.0 },
+                    { state: 'Paraná', participants: 1500, avgSpend: 1800, stayDays: 4.0 },
+                    { state: 'São Paulo', participants: 1200, avgSpend: 2200, stayDays: 3.0 },
+                    { state: 'Distrito Federal', participants: 800, avgSpend: 1500, stayDays: 2.5 },
+                ]
+            },
+            'natanzinho': {
+                id: 'natanzinho',
+                name: "Show Natanzinho",
+                city: 'Várzea Grande',
+                kpis: [
+                    { id: '1', label: 'Público Total', value: '12.000', change: -2.1, iconName: 'Users' },
+                    { id: '2', label: 'Gasto Médio', value: 'R$ 450,00', change: -5.5, iconName: 'DollarSign' },
+                    { id: '3', label: '% Público Local', value: '85%', change: 4.2, iconName: 'MapPin' },
+                ],
+                motivations: [
+                    { reason: 'Fã do Artista', percentage: 70 },
+                    { reason: 'Diversão com Amigos', percentage: 25 },
+                    { reason: 'Outros', percentage: 5 },
+                ],
+                spending: [
+                    { category: 'Bebidas/Bar', amount: 200 },
+                    { category: 'Ingresso', amount: 120 },
+                    { category: 'Alimentação', amount: 80 },
+                    { category: 'Transporte App', amount: 50 },
+                ],
+                origins: [
+                    { state: 'Várzea Grande', participants: 6000, avgSpend: 250, stayDays: 1.0 },
+                    { state: 'Cuiabá', participants: 4500, avgSpend: 300, stayDays: 1.0 },
+                    { state: 'MT (Baixada Cuiabana)', participants: 1500, avgSpend: 500, stayDays: 1.5 },
+                    { state: 'Outros', participants: 0, avgSpend: 0, stayDays: 0 },
+                ]
+            },
+            'gustavo-lima': {
+                id: 'gustavo-lima',
+                name: "Buteco do Gustavo Lima",
+                city: 'Cuiabá',
+                kpis: [
+                    { id: '1', label: 'Público Total', value: '25.000', change: 10.0, iconName: 'Users' },
+                    { id: '2', label: 'Gasto Médio', value: 'R$ 780,00', change: 4.1, iconName: 'DollarSign' },
+                    { id: '3', label: '% Interior MT', value: '45%', change: 15.2, iconName: 'MapPin' },
+                ],
+                motivations: [
+                    { reason: 'Show Sertanejo', percentage: 80 },
+                    { reason: 'Encontro Social', percentage: 15 },
+                    { reason: 'Negócios (Agro)', percentage: 5 },
+                ],
+                spending: [
+                    { category: 'Consumo Evento', amount: 350 },
+                    { category: 'Ingresso/Camarote', amount: 250 },
+                    { category: 'Hospedagem', amount: 100 },
+                    { category: 'Transporte', amount: 80 },
+                ],
+                origins: [
+                    { state: 'Cuiabá', participants: 10000, avgSpend: 400, stayDays: 1.0 },
+                    { state: 'Sorriso/Sinop', participants: 5000, avgSpend: 1200, stayDays: 2.0 },
+                    { state: 'Rondonópolis', participants: 4000, avgSpend: 900, stayDays: 1.5 },
+                    { state: 'Primavera do Leste', participants: 2500, avgSpend: 1000, stayDays: 2.0 },
+                ]
+            },
+            'cuiaba-flamengo': {
+                id: 'cuiaba-flamengo',
+                name: "Cuiabá EC x Flamengo (Brasileirão)",
+                city: 'Cuiabá',
+                kpis: [
+                    { id: '1', label: 'Público Pagante', value: '41.200', change: 35.0, iconName: 'Users' },
+                    { id: '2', label: 'Ticket Médio', value: 'R$ 320,00', change: -10.5, iconName: 'DollarSign' },
+                    { id: '3', label: '% Torcida Visitante', value: '35%', change: 20.0, iconName: 'MapPin' },
+                ],
+                motivations: [
+                    { reason: 'Paixão pelo Time', percentage: 90 },
+                    { reason: 'Lazer em Família', percentage: 8 },
+                    { reason: 'Conhecer a Arena', percentage: 2 },
+                ],
+                spending: [
+                    { category: 'Ingresso', amount: 150 },
+                    { category: 'Alimentação/Bebida', amount: 100 },
+                    { category: 'Transporte', amount: 40 },
+                    { category: 'Souvenirs/Camisas', amount: 30 },
+                ],
+                origins: [
+                    { state: 'Mato Grosso', participants: 35000, avgSpend: 200, stayDays: 1.0 },
+                    { state: 'Rio de Janeiro', participants: 2000, avgSpend: 1800, stayDays: 3.0 },
+                    { state: 'Rondônia/Acre', participants: 1500, avgSpend: 900, stayDays: 2.0 },
+                    { state: 'Outros Estados', participants: 2700, avgSpend: 1100, stayDays: 2.5 },
+                ]
+            },
+            'festival-inverno': {
+                id: 'festival-inverno',
+                name: "Festival de Inverno",
+                city: 'Chapada dos Guimarães',
+                kpis: [
+                    { id: '1', label: 'Fluxo Turístico', value: '65.000', change: 5.0, iconName: 'Users' },
+                    { id: '2', label: 'Gasto Médio/Dia', value: 'R$ 550,00', change: 12.0, iconName: 'DollarSign' },
+                    { id: '3', label: 'Ocupação Hoteleira', value: '98%', change: 2.0, iconName: 'MapPin' },
+                ],
+                motivations: [
+                    { reason: 'Shows Nacionais', percentage: 50 },
+                    { reason: 'Clima/Natureza', percentage: 30 },
+                    { reason: 'Gastronomia', percentage: 20 },
+                ],
+                spending: [
+                    { category: 'Hospedagem (Pousadas/Casas)', amount: 250 },
+                    { category: 'Alimentação', amount: 150 },
+                    { category: 'Passeios', amount: 100 },
+                    { category: 'Artesanato/Compras', amount: 50 },
+                ],
+                origins: [
+                    { state: 'Cuiabá/Várzea Grande', participants: 45000, avgSpend: 300, stayDays: 1.5 },
+                    { state: 'Interior MT', participants: 10000, avgSpend: 800, stayDays: 2.5 },
+                    { state: 'Outros Estados', participants: 5000, avgSpend: 1500, stayDays: 4.0 },
+                    { state: 'Estrangeiros', participants: 100, avgSpend: 2500, stayDays: 5.0 },
+                ]
+            }
         };
 
-        return (
-          <div className="min-h-screen pb-12 bg-slate-900 text-slate-50">
-            <header className="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center h-20">
-                  <div>
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">MTData</h1>
-                    <p className="text-xs text-slate-400 uppercase tracking-widest mt-1">Intelligence • Eventos Mato Grosso</p>
-                  </div>
-                  <div className="flex gap-3">
-                    <button onClick={handleExport} className="hidden sm:flex items-center px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-lg border border-slate-700 transition-colors">
-                      <Download className="w-4 h-4 mr-2" /> Exportar
-                    </button>
-                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-xs shadow-lg ring-2 ring-slate-900">MT</div>
-                  </div>
+        // --- 4. COMPONENTES ---
+
+        // KPICard
+        const KPICard = ({ data }) => {
+            const getIcon = () => {
+                switch (data.iconName) {
+                    case 'Users': return <IconUsers className="w-6 h-6 text-emerald-400" />;
+                    case 'DollarSign': return <IconDollar className="w-6 h-6 text-blue-400" />;
+                    case 'MapPin': return <IconMapPin className="w-6 h-6 text-purple-400" />;
+                    default: return <IconUsers className="w-6 h-6 text-gray-400" />;
+                }
+            };
+            const isPositive = data.change >= 0;
+
+            return (
+                <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg transition-transform hover:scale-[1.02] duration-300">
+                    <div className="flex justify-between items-start mb-4">
+                        <div className="p-3 bg-slate-900 rounded-lg border border-slate-700">{getIcon()}</div>
+                        <div className={`flex items-center text-sm font-medium ${isPositive ? 'text-emerald-400' : 'text-rose-400'}`}>
+                            {isPositive ? <IconArrowUp className="w-4 h-4 mr-1" /> : <IconArrowDown className="w-4 h-4 mr-1" />}
+                            {Math.abs(data.change)}% vs. anterior
+                        </div>
+                    </div>
+                    <div>
+                        <p className="text-slate-400 text-sm font-medium uppercase tracking-wider">{data.label}</p>
+                        <h3 className="text-3xl font-bold text-slate-100 mt-1">{data.value}</h3>
+                    </div>
                 </div>
-              </div>
-            </header>
+            );
+        };
 
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-              <section className="bg-slate-800 rounded-xl p-4 mb-8 shadow-sm border border-slate-700 flex flex-col md:flex-row gap-4 items-center justify-between">
-                <div className="flex items-center gap-2 text-slate-300 font-medium">
-                  <Filter className="w-5 h-5 text-emerald-500" />
-                  <span>Evento:</span>
+        // ChartsSection
+        const COLORS = ['#34d399', '#60a5fa', '#a78bfa', '#f472b6', '#fbbf24'];
+        
+        const CustomTooltip = ({ active, payload, label }) => {
+            if (active && payload && payload.length) {
+                return (
+                    <div className="bg-slate-900 border border-slate-700 p-3 rounded shadow-xl">
+                        <p className="text-slate-200 font-semibold">{`${label || payload[0].name}: ${payload[0].value}${typeof payload[0].value === 'number' && payload[0].value > 100 ? '' : '%'}`}</p>
+                    </div>
+                );
+            }
+            return null;
+        };
+
+        const ChartsSection = ({ motivationData, spendData }) => {
+            // Acessa o Recharts globalmente DENTRO do componente para garantir que o script já carregou
+            const Recharts = window.Recharts;
+
+            // Se ainda não carregou, exibe erro ou loading (mas não quebra a tela)
+            if (!Recharts) {
+                return (
+                    <div className="col-span-1 lg:col-span-2 bg-red-900/20 border border-red-800 rounded-xl p-6 text-center text-red-300">
+                        <p>Erro: A biblioteca de gráficos não pôde ser carregada. Tente recarregar a página.</p>
+                    </div>
+                );
+            }
+
+            const { 
+                BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, 
+                PieChart, Pie, Legend 
+            } = Recharts;
+
+            return (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    {/* Gráfico 1 */}
+                    <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg">
+                        <h4 className="text-lg font-semibold text-slate-100 mb-6 flex items-center">
+                            <span className="w-1 h-6 bg-emerald-500 rounded mr-3"></span>
+                            Motivação Principal da Viagem
+                        </h4>
+                        <div className="h-64 w-full">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart layout="vertical" data={motivationData} margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" horizontal={false} />
+                                    <XAxis type="number" stroke="#94a3b8" />
+                                    <YAxis type="category" dataKey="reason" stroke="#f8fafc" width={120} tick={{fontSize: 12}} />
+                                    <Tooltip content={<CustomTooltip />} cursor={{fill: '#334155', opacity: 0.4}} />
+                                    <Bar dataKey="percentage" radius={[0, 4, 4, 0]}>
+                                        {motivationData.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
+                                    </Bar>
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+
+                    {/* Gráfico 2 */}
+                    <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg">
+                        <h4 className="text-lg font-semibold text-slate-100 mb-6 flex items-center">
+                            <span className="w-1 h-6 bg-blue-500 rounded mr-3"></span>
+                            Distribuição de Gastos (R$)
+                        </h4>
+                        <div className="h-64 w-full">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <PieChart>
+                                    <Pie data={spendData} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="amount" nameKey="category">
+                                        {spendData.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
+                                    </Pie>
+                                    <Tooltip content={<CustomTooltip />} />
+                                    <Legend verticalAlign="middle" align="right" layout="vertical" wrapperStyle={{ color: '#94a3b8' }} />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full md:w-2/3">
-                  <select 
-                    className="bg-slate-900 border border-slate-600 text-slate-200 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-full p-2.5"
-                    value={selectedEventId}
-                    onChange={(e) => setSelectedEventId(e.target.value)}
-                  >
-                    <option value="guns-n-roses">Show Guns N' Roses</option>
-                    <option value="cuiaba-flamengo">Cuiabá EC x Flamengo</option>
-                    <option value="gustavo-lima">Buteco Gustavo Lima</option>
-                    <option value="festival-inverno">Festival de Inverno</option>
-                    <option value="stock-car">Stock Car</option>
-                    <option value="natanzinho">Show Natanzinho</option>
-                  </select>
-                  <div className="flex items-center px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-slate-400 text-sm">
-                      <span className="mr-2 text-emerald-500 font-semibold">Local:</span>
-                      {data.city}
-                  </div>
-                </div>
-              </section>
+            );
+        };
 
-              <div className="flex justify-end mb-6">
-                <button 
-                    onClick={handleGenerateInsights}
-                    disabled={aiLoading === LoadingState.LOADING}
-                    className={`flex items-center px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-lg ${aiLoading === LoadingState.LOADING ? 'bg-slate-700 text-slate-400' : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white'}`}
-                  >
-                    <Sparkles className={`w-4 h-4 mr-2 ${aiLoading === LoadingState.LOADING ? 'animate-spin' : ''}`} />
-                    {aiLoading === LoadingState.LOADING ? 'Processando...' : `Gerar Análise IA`}
-                  </button>
-              </div>
+        // --- 5. APLICAÇÃO PRINCIPAL ---
+        const App = () => {
+            const [selectedEventId, setSelectedEventId] = useState('guns-n-roses');
+            const [data, setData] = useState(EVENT_DATABASE['guns-n-roses']);
+            const [aiInsights, setAiInsights] = useState('');
+            const [aiLoading, setAiLoading] = useState('IDLE'); // IDLE, LOADING, SUCCESS, ERROR
 
-              {aiInsights && (
-                <div className="bg-slate-800/50 border border-purple-500/30 rounded-xl p-6 mb-8">
-                  <div className="flex items-center mb-4">
-                      <Sparkles className="w-5 h-5 text-purple-400 mr-2" />
-                      <h3 className="text-lg font-bold text-slate-100">Insights Estratégicos</h3>
-                  </div>
-                  <div className="prose prose-invert prose-sm max-w-none text-slate-300">
-                      <ReactMarkdown>{aiInsights}</ReactMarkdown>
-                  </div>
-                </div>
-              )}
+            useEffect(() => {
+                if (EVENT_DATABASE[selectedEventId]) {
+                    setData(EVENT_DATABASE[selectedEventId]);
+                    setAiInsights('');
+                    setAiLoading('IDLE');
+                }
+            }, [selectedEventId]);
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                {data.kpis.map((kpi) => <KPICard key={kpi.id} data={kpi} />)}
-              </div>
+            const handleExport = () => {
+                alert(`Exportação simulada: Relatório PDF para ${data.name.toUpperCase()}`);
+            };
 
-              <ChartsSection motivationData={data.motivations} spendData={data.spending} />
+            const handleGenerateInsights = async () => {
+                if (!ENV.API_KEY || ENV.API_KEY === '') {
+                    alert("Atenção: API Key não configurada. Edite o código para adicionar sua chave.");
+                    return;
+                }
 
-              <section className="bg-slate-800 border border-slate-700 rounded-xl shadow-lg overflow-hidden mb-12">
-                <div className="px-6 py-4 border-b border-slate-700 bg-slate-800/50 flex justify-between items-center">
-                  <h3 className="text-lg font-semibold text-slate-100">Fluxo por Origem e Permanência</h3>
-                  <span className="text-xs text-slate-500 uppercase font-bold tracking-wider">Consolidado</span>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-left text-slate-400">
-                    <thead className="text-xs text-slate-300 uppercase bg-slate-900/50">
-                      <tr>
-                        <th className="px-6 py-3">Origem</th>
-                        <th className="px-6 py-3">Participantes</th>
-                        <th className="px-6 py-3">Gasto Médio</th>
-                        <th className="px-6 py-3">Permanência</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data.origins.map((origin, idx) => (
-                        <tr key={idx} className="bg-slate-800 border-b border-slate-700 hover:bg-slate-700/50">
-                          <td className="px-6 py-4 font-medium text-slate-100">{origin.state}</td>
-                          <td className="px-6 py-4">{origin.participants.toLocaleString('pt-BR')}</td>
-                          <td className="px-6 py-4">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(origin.avgSpend)}</td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center">
-                              <span className="w-16 bg-slate-700 rounded-full h-1.5 mr-2">
-                                <span className="bg-emerald-500 h-1.5 rounded-full block" style={{width: `${(origin.stayDays / 7) * 100}%`}}></span>
-                              </span>
-                              {origin.stayDays.toFixed(1)} dias
+                if (!window.GoogleGenAI) {
+                    alert("A biblioteca de IA ainda está carregando ou falhou. Tente novamente em instantes.");
+                    return;
+                }
+
+                setAiLoading('LOADING');
+                
+                try {
+                    const ai = new window.GoogleGenAI({ apiKey: ENV.API_KEY });
+                    const prompt = `
+                        Atue como um Especialista em Inteligência de Dados de Turismo.
+                        Analise os seguintes dados do evento "${data.name}" em ${data.city}:
+                        KPIs: ${JSON.stringify(data.kpis)}
+                        Motivação: ${JSON.stringify(data.motivations)}
+                        Gastos: ${JSON.stringify(data.spending)}
+                        
+                        Responda em Markdown. Seja breve (máximo 3 bullets).
+                    `;
+
+                    const response = await ai.models.generateContent({
+                        model: 'gemini-2.5-flash',
+                        contents: prompt,
+                    });
+                    
+                    setAiInsights(response.text);
+                    setAiLoading('SUCCESS');
+
+                } catch (error) {
+                    console.error("Erro IA:", error);
+                    setAiLoading('ERROR');
+                    setAiInsights("**Erro ao gerar análise.** Verifique sua conexão e a chave de API.");
+                }
+            };
+
+            return (
+                <div className="min-h-screen pb-12 bg-slate-900 text-slate-50">
+                    {/* Header */}
+                    <header className="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-20">
+                                <div>
+                                    <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">MTData</h1>
+                                    <p className="text-xs text-slate-400 uppercase tracking-widest mt-1">Intelligence • Mato Grosso</p>
+                                </div>
+                                <div className="flex gap-3">
+                                    <button onClick={handleExport} className="hidden sm:flex items-center px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-lg border border-slate-700 transition-colors">
+                                        <IconDownload className="w-4 h-4 mr-2" /> Exportar
+                                    </button>
+                                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-xs shadow-lg ring-2 ring-slate-900">MT</div>
+                                </div>
                             </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                        </div>
+                    </header>
+
+                    {/* Conteúdo */}
+                    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+                        
+                        {/* Filtros */}
+                        <section className="bg-slate-800 rounded-xl p-4 mb-8 shadow-sm border border-slate-700 flex flex-col md:flex-row gap-4 items-center justify-between">
+                            <div className="flex items-center gap-2 text-slate-300 font-medium">
+                                <IconFilter className="w-5 h-5 text-emerald-500" />
+                                <span>Evento:</span>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full md:w-2/3">
+                                <select 
+                                    className="bg-slate-900 border border-slate-600 text-slate-200 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-full p-2.5"
+                                    value={selectedEventId}
+                                    onChange={(e) => setSelectedEventId(e.target.value)}
+                                >
+                                    <option value="guns-n-roses">Show Guns N' Roses (Arena)</option>
+                                    <option value="cuiaba-flamengo">Cuiabá EC x Flamengo (Série A)</option>
+                                    <option value="gustavo-lima">Buteco Gustavo Lima</option>
+                                    <option value="festival-inverno">Festival de Inverno (Chapada)</option>
+                                    <option value="stock-car">Stock Car Pro Series</option>
+                                    <option value="natanzinho">Show Natanzinho</option>
+                                </select>
+                                <div className="flex items-center px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-slate-400 text-sm">
+                                    <span className="mr-2 text-emerald-500 font-semibold">Local:</span>
+                                    {data.city}
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* Botão IA */}
+                        <div className="flex justify-end mb-6">
+                            <button 
+                                onClick={handleGenerateInsights}
+                                disabled={aiLoading === 'LOADING'}
+                                className={`flex items-center px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-lg ${aiLoading === 'LOADING' ? 'bg-slate-700 text-slate-400' : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500'}`}
+                            >
+                                <IconSparkles className={`w-4 h-4 mr-2 ${aiLoading === 'LOADING' ? 'animate-spin' : ''}`} />
+                                {aiLoading === 'LOADING' ? 'Analisando...' : 'Gerar Análise IA'}
+                            </button>
+                        </div>
+
+                        {/* Resultado IA */}
+                        {aiInsights && (
+                            <div className="bg-slate-800/50 border border-purple-500/30 rounded-xl p-6 mb-8 animate-[fadeIn_0.5s_ease-out]">
+                                <div className="flex items-center mb-4">
+                                    <IconSparkles className="w-5 h-5 text-purple-400 mr-2" />
+                                    <h3 className="text-lg font-bold text-slate-100">Insights Estratégicos</h3>
+                                </div>
+                                <div 
+                                    className="prose prose-invert prose-sm max-w-none text-slate-300"
+                                    dangerouslySetInnerHTML={{ __html: md.render(aiInsights) }} 
+                                />
+                            </div>
+                        )}
+
+                        {/* KPIs */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            {data.kpis.map((kpi) => <KPICard key={kpi.id} data={kpi} />)}
+                        </div>
+
+                        {/* Gráficos */}
+                        <ChartsSection motivationData={data.motivations} spendData={data.spending} />
+
+                        {/* Tabela de Origem */}
+                        <section className="bg-slate-800 border border-slate-700 rounded-xl shadow-lg overflow-hidden mb-12">
+                            <div className="px-6 py-4 border-b border-slate-700 bg-slate-800/50 flex justify-between items-center">
+                                <h3 className="text-lg font-semibold text-slate-100">Fluxo por Origem e Permanência</h3>
+                                <span className="text-xs text-slate-500 uppercase font-bold tracking-wider">Consolidado</span>
+                            </div>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-sm text-left text-slate-400">
+                                    <thead className="text-xs text-slate-300 uppercase bg-slate-900/50">
+                                        <tr>
+                                            <th className="px-6 py-3">Origem</th>
+                                            <th className="px-6 py-3">Participantes</th>
+                                            <th className="px-6 py-3">Gasto Médio</th>
+                                            <th className="px-6 py-3">Permanência</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {data.origins.map((origin, idx) => (
+                                            <tr key={idx} className="bg-slate-800 border-b border-slate-700 hover:bg-slate-700/50">
+                                                <td className="px-6 py-4 font-medium text-slate-100">{origin.state}</td>
+                                                <td className="px-6 py-4">{origin.participants.toLocaleString('pt-BR')}</td>
+                                                <td className="px-6 py-4">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(origin.avgSpend)}</td>
+                                                <td className="px-6 py-4">
+                                                    <div className="flex items-center">
+                                                        <span className="w-16 bg-slate-700 rounded-full h-1.5 mr-2">
+                                                            <span className="bg-emerald-500 h-1.5 rounded-full block" style={{width: `${Math.min((origin.stayDays / 7) * 100, 100)}%`}}></span>
+                                                        </span>
+                                                        {origin.stayDays.toFixed(1)} dias
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </main>
+
+                    <footer className="max-w-7xl mx-auto px-6 mt-12 text-center text-slate-500 text-sm">
+                        <p>© 2024 MTData Intelligence. MVP Demonstrativo.</p>
+                    </footer>
                 </div>
-              </section>
-            </main>
+            );
+        };
 
-            <footer className="max-w-7xl mx-auto px-6 mt-12 text-center text-slate-500 text-sm">
-              <p>© 2024 MTData Intelligence. MVP Demonstrativo.</p>
-            </footer>
-          </div>
-        );
-      };
-
-      const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(<App />);
+        // --- 6. INICIALIZAÇÃO ---
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
-  </body>
+</body>
 </html>
