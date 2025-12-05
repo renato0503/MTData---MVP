@@ -23,6 +23,12 @@ export interface OriginData {
   stayDays: number;
 }
 
+export interface EventAnalysis {
+  context: string;
+  financialImpact: string;
+  socialImpact: string;
+}
+
 export interface EventProfile {
   id: string;
   name: string;
@@ -31,6 +37,7 @@ export interface EventProfile {
   motivations: MotivationData[];
   spending: SpendData[];
   origins: OriginData[];
+  analysis: EventAnalysis;
 }
 
 export interface DashboardState {
