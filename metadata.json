@@ -1,0 +1,5 @@
+{
+  "name": "MTData - Tourist Profile Dashboard",
+  "description": "A high-fidelity MVP dashboard for analyzing tourist profiles in events, featuring simulated data visualization and Gemini-powered insights.",
+  "requestFramePermissions": []
+}
