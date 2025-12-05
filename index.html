@@ -96,6 +96,17 @@
         const IconSparkles = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M9 5H5"/><path d="M3 7.207V3h4.207"/></svg>;
         const IconArrowUp = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>;
         const IconArrowDown = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M7 7h10v10"/><path d="M7 17 17 7" transform="rotate(90 12 12)"/></svg>;
+        const IconInfo = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>;
+        
+        // Novos ícones para Coleta
+        const IconLayoutDashboard = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>;
+        const IconClipboardList = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>;
+        const IconCheckCircle = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>;
+        const IconSave = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>;
+        const IconRotateCcw = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>;
+        const IconStar = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>;
+        const IconUser = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
+        const IconArrowRight = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
 
         // --- 3. DADOS (Mato Grosso Database) ---
         const EVENT_DATABASE = {
@@ -124,7 +135,12 @@
                     { state: 'São Paulo', participants: 4200, avgSpend: 2100, stayDays: 3.5 },
                     { state: 'Goiás', participants: 3100, avgSpend: 1200, stayDays: 2.5 },
                     { state: 'Mato Grosso do Sul', participants: 2800, avgSpend: 1100, stayDays: 2.0 },
-                ]
+                ],
+                analysis: {
+                    context: "Megaevento internacional realizado na Arena Pantanal, consolidando Cuiabá na rota de grandes turnês mundiais. O evento mobilizou infraestrutura de grande porte e atraiu um fluxo intenso de fãs de estados vizinhos.",
+                    financialImpact: "Alta ocupação hoteleira e impacto significativo no setor de serviços e transporte. O ticket médio elevado reflete um público com maior poder aquisitivo e disposição para gastos extras em turismo de experiência.",
+                    socialImpact: "Forte projeção da marca da cidade e geração massiva de empregos temporários na operação. O evento promoveu um senso de pertencimento e orgulho local ao receber uma atração de nível global."
+                }
             },
             'stock-car': {
                 id: 'stock-car',
@@ -151,7 +167,12 @@
                     { state: 'Paraná', participants: 1500, avgSpend: 1800, stayDays: 4.0 },
                     { state: 'São Paulo', participants: 1200, avgSpend: 2200, stayDays: 3.0 },
                     { state: 'Distrito Federal', participants: 800, avgSpend: 1500, stayDays: 2.5 },
-                ]
+                ],
+                analysis: {
+                    context: "Etapa do maior campeonato de automobilismo da América Latina. O evento se destaca não apenas pela competição, mas pelo forte componente de relacionamento B2B e ativação de marcas.",
+                    financialImpact: "Movimentação financeira concentrada em hospitalidade de alto padrão e serviços corporativos. A presença de equipes, patrocinadores e imprensa gera uma demanda qualificada por hotelaria executiva.",
+                    socialImpact: "Estímulo ao turismo esportivo e visibilidade midiática nacional para Cuiabá. O evento fomenta a cultura automobilística local e envolve diversos prestadores de serviço especializados."
+                }
             },
             'natanzinho': {
                 id: 'natanzinho',
@@ -178,7 +199,12 @@
                     { state: 'Cuiabá', participants: 4500, avgSpend: 300, stayDays: 1.0 },
                     { state: 'MT (Baixada Cuiabana)', participants: 1500, avgSpend: 500, stayDays: 1.5 },
                     { state: 'Outros', participants: 0, avgSpend: 0, stayDays: 0 },
-                ]
+                ],
+                analysis: {
+                    context: "Evento de grande apelo popular realizado em Várzea Grande, focando no público jovem e na cultura musical do momento (piseiro/forró). Caracterizado por alta densidade de público local.",
+                    financialImpact: "Impacto financeiro pulverizado no comércio local informal, bebidas e transporte por aplicativo. Embora o ticket médio seja menor, o volume de transações rápidas é alto, aquecendo a economia noturna.",
+                    socialImpact: "Importante opção de lazer e entretenimento acessível para a juventude da Baixada Cuiabana. Reforça a identidade cultural regional e promove a interação social intensa na comunidade."
+                }
             },
             'gustavo-lima': {
                 id: 'gustavo-lima',
@@ -205,7 +231,12 @@
                     { state: 'Sorriso/Sinop', participants: 5000, avgSpend: 1200, stayDays: 2.0 },
                     { state: 'Rondonópolis', participants: 4000, avgSpend: 900, stayDays: 1.5 },
                     { state: 'Primavera do Leste', participants: 2500, avgSpend: 1000, stayDays: 2.0 },
-                ]
+                ],
+                analysis: {
+                    context: "Festival de música sertaneja de grande proporção, atraindo caravanas de todo o interior do estado. O evento serve como ponto de encontro social e networking informal para o setor do agronegócio.",
+                    financialImpact: "Elevada injeção de recursos devido ao perfil de consumo ostentação nos camarotes e áreas VIP. Gera demanda significativa por vestuário, beleza e hospedagem para o público vindo do interior.",
+                    socialImpact: "Fortalecimento da cultura sertaneja como identidade estadual. O evento atua como um catalisador de integração entre a capital e os polos produtivos do interior de Mato Grosso."
+                }
             },
             'cuiaba-flamengo': {
                 id: 'cuiaba-flamengo',
@@ -232,7 +263,12 @@
                     { state: 'Rio de Janeiro', participants: 2000, avgSpend: 1800, stayDays: 3.0 },
                     { state: 'Rondônia/Acre', participants: 1500, avgSpend: 900, stayDays: 2.0 },
                     { state: 'Outros Estados', participants: 2700, avgSpend: 1100, stayDays: 2.5 },
-                ]
+                ],
+                analysis: {
+                    context: "Partida de alta demanda do Campeonato Brasileiro. A presença de um time de massa como o Flamengo mobiliza não apenas a torcida local, mas atrai fãs de estados vizinhos que não possuem times na Série A.",
+                    financialImpact: "Receita recorde de bilheteria e ocupação máxima da Arena Pantanal. O consumo é focado na experiência do dia do jogo (bares, ambulantes, transporte), com pico de vendas de artigos esportivos.",
+                    socialImpact: "Promoção do esporte e uso social da Arena Pantanal. O evento gera um ambiente de integração familiar e paixão nacional, embora exija grande operação de segurança e logística urbana."
+                }
             },
             'festival-inverno': {
                 id: 'festival-inverno',
@@ -259,11 +295,164 @@
                     { state: 'Interior MT', participants: 10000, avgSpend: 800, stayDays: 2.5 },
                     { state: 'Outros Estados', participants: 5000, avgSpend: 1500, stayDays: 4.0 },
                     { state: 'Estrangeiros', participants: 100, avgSpend: 2500, stayDays: 5.0 },
-                ]
+                ],
+                analysis: {
+                    context: "Principal evento turístico de inverno do estado, unindo atrações musicais nacionais, gastronomia e o cenário natural de Chapada dos Guimarães. Atrai um público diversificado em busca de experiência completa.",
+                    financialImpact: "Impacto profundo na economia local da cidade-sede, sustentando pousadas, restaurantes e comércio de artesanato por semanas. A alta permanência gera um ciclo virtuoso de consumo descentralizado.",
+                    socialImpact: "Valorização do patrimônio natural e cultural de Chapada. O festival democratiza o acesso à cultura com shows gratuitos e fomenta a consciência ambiental, apesar dos desafios de infraestrutura urbana."
+                }
             }
         };
 
         // --- 4. COMPONENTES ---
+
+        // CollectionForm (NOVO COMPONENTE INLINE)
+        const CollectionForm = ({ eventName, city }) => {
+            const [step, setStep] = useState(1);
+            const [isSubmitting, setIsSubmitting] = useState(false);
+            const [success, setSuccess] = useState(false);
+            const [formData, setFormData] = useState({
+                origin: '', ageGroup: '', motivation: '', transportSpend: 0, foodSpend: 0, lodgingSpend: 0, rating: 0
+            });
+
+            const handleSelect = (field, value) => setFormData(prev => ({ ...prev, [field]: value }));
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                setIsSubmitting(true);
+                setTimeout(() => {
+                    setIsSubmitting(false);
+                    setSuccess(true);
+                    setTimeout(() => {
+                        setSuccess(false);
+                        setStep(1);
+                        setFormData({ origin: '', ageGroup: '', motivation: '', transportSpend: 0, foodSpend: 0, lodgingSpend: 0, rating: 0 });
+                    }, 2500);
+                }, 1000);
+            };
+
+            if (success) {
+                return (
+                    <div className="flex flex-col items-center justify-center h-[600px] bg-slate-800 rounded-2xl border border-emerald-500/30 p-8 text-center animate-[zoomIn_0.3s_ease-out]">
+                        <div className="w-24 h-24 bg-emerald-500 rounded-full flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(16,185,129,0.5)]">
+                            <IconCheckCircle className="w-12 h-12 text-white" />
+                        </div>
+                        <h2 className="text-3xl font-bold text-white mb-2">Dados Salvos!</h2>
+                        <p className="text-slate-400 text-lg">Entrevista #3842 registrada com sucesso.</p>
+                        <p className="text-emerald-400 mt-4 text-sm font-semibold uppercase tracking-widest">Aguardando próxima coleta...</p>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="max-w-3xl mx-auto">
+                    <div className="bg-slate-800 border-b border-slate-700 p-6 rounded-t-2xl flex justify-between items-center sticky top-0 z-10">
+                        <div>
+                            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                                <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+                                Coleta em Tempo Real
+                            </h2>
+                            <p className="text-slate-400 text-sm mt-1">{eventName} • {city}</p>
+                        </div>
+                        <div className="bg-slate-900 px-4 py-2 rounded-lg border border-slate-700">
+                            <span className="text-xs text-slate-500 uppercase font-bold">Pesquisador</span>
+                            <div className="text-slate-200 font-medium">Acadêmico UFMT</div>
+                        </div>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="bg-slate-900 border border-slate-800 border-t-0 rounded-b-2xl p-6 md:p-8 shadow-2xl">
+                        {/* Progress Bar */}
+                        <div className="mb-8">
+                            <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                                <div className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500 ease-out" style={{ width: `${(step / 3) * 100}%` }}></div>
+                            </div>
+                            <div className="flex justify-between mt-2 text-xs font-semibold uppercase text-slate-500 tracking-wider">
+                                <span className={step >= 1 ? 'text-emerald-400' : ''}>1. Perfil</span>
+                                <span className={step >= 2 ? 'text-emerald-400' : ''}>2. Gastos</span>
+                                <span className={step >= 3 ? 'text-emerald-400' : ''}>3. Avaliação</span>
+                            </div>
+                        </div>
+
+                        {/* STEP 1 */}
+                        {step === 1 && (
+                            <div className="space-y-8 animate-[slideInRight_0.3s_ease-out]">
+                                <div className="space-y-3">
+                                    <label className="text-slate-300 font-semibold text-lg flex items-center gap-2"><IconMapPin className="text-emerald-500" /> Origem do Visitante</label>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        {['Cuiabá/Várzea Grande', 'Interior MT', 'Outros Estados', 'Estrangeiro'].map(opt => (
+                                            <button key={opt} type="button" onClick={() => handleSelect('origin', opt)} className={`p-4 rounded-xl border text-left font-medium transition-all ${formData.origin === opt ? 'bg-emerald-600/20 border-emerald-500 text-emerald-400' : 'bg-slate-800 border-slate-700 text-slate-400'}`}>{opt}</button>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="space-y-3">
+                                    <label className="text-slate-300 font-semibold text-lg flex items-center gap-2"><IconUser className="text-blue-500" /> Faixa Etária</label>
+                                    <div className="flex gap-3 overflow-x-auto pb-2">
+                                        {['18-24', '25-34', '35-44', '45-59', '60+'].map(opt => (
+                                            <button key={opt} type="button" onClick={() => handleSelect('ageGroup', opt)} className={`flex-1 py-3 px-4 rounded-lg border font-medium whitespace-nowrap transition-all ${formData.ageGroup === opt ? 'bg-blue-600/20 border-blue-500 text-blue-400' : 'bg-slate-800 border-slate-700 text-slate-400'}`}>{opt}</button>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="pt-6 flex justify-end">
+                                    <button type="button" onClick={() => setStep(2)} disabled={!formData.origin || !formData.ageGroup} className="flex items-center bg-white text-slate-900 px-6 py-3 rounded-xl font-bold hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"><span className="mr-2">Próximo</span><IconArrowRight className="w-5 h-5" /></button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* STEP 2 */}
+                        {step === 2 && (
+                            <div className="space-y-8 animate-[slideInRight_0.3s_ease-out]">
+                                <div className="space-y-3">
+                                    <label className="text-slate-300 font-semibold text-lg flex items-center gap-2"><IconCheckCircle className="text-purple-500" /> Motivação Principal</label>
+                                    <select value={formData.motivation} onChange={(e) => handleSelect('motivation', e.target.value)} className="w-full bg-slate-800 border border-slate-700 text-white p-4 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none">
+                                        <option value="">Selecione...</option>
+                                        <option value="show">O Evento/Show (Exclusivo)</option>
+                                        <option value="lazer">Turismo/Lazer Geral</option>
+                                        <option value="amigos">Visita a Amigos/Parentes</option>
+                                        <option value="negocios">Trabalho/Negócios</option>
+                                    </select>
+                                </div>
+                                <div className="space-y-4">
+                                    <label className="text-slate-300 font-semibold text-lg flex items-center gap-2"><IconDollar className="text-yellow-500" /> Estimativa de Gastos (R$)</label>
+                                    {[{ l: 'Transporte', k: 'transportSpend' }, { l: 'Alimentação', k: 'foodSpend' }, { l: 'Hospedagem', k: 'lodgingSpend' }].map(item => (
+                                        <div key={item.k} className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                                            <div className="flex justify-between text-sm text-slate-400 mb-2"><span>{item.l}</span><span className="text-yellow-400 font-mono font-bold">R$ {formData[item.k]}</span></div>
+                                            <input type="range" min="0" max="2000" step="50" value={formData[item.k]} onChange={(e) => handleSelect(item.k, parseInt(e.target.value))} className="w-full h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer accent-yellow-500" />
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="pt-6 flex justify-between">
+                                    <button type="button" onClick={() => setStep(1)} className="text-slate-400 hover:text-white font-medium px-4">Voltar</button>
+                                    <button type="button" onClick={() => setStep(3)} className="flex items-center bg-white text-slate-900 px-6 py-3 rounded-xl font-bold hover:bg-slate-200"><span className="mr-2">Próximo</span><IconArrowRight className="w-5 h-5" /></button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* STEP 3 */}
+                        {step === 3 && (
+                            <div className="space-y-8 animate-[slideInRight_0.3s_ease-out]">
+                                <div className="text-center py-6">
+                                    <label className="text-slate-300 font-semibold text-xl block mb-6">Como você avalia sua experiência?</label>
+                                    <div className="flex justify-center gap-2">
+                                        {[1, 2, 3, 4, 5].map(star => (
+                                            <button type="button" key={star} onClick={() => handleSelect('rating', star)} className="group focus:outline-none transition-transform active:scale-90">
+                                                <IconStar className={`w-12 h-12 transition-colors ${formData.rating >= star ? 'text-yellow-400 fill-yellow-400' : 'text-slate-600 group-hover:text-slate-500'}`} />
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="pt-6 flex justify-between items-center border-t border-slate-800">
+                                    <button type="button" onClick={() => setStep(2)} className="text-slate-400 hover:text-white font-medium px-4">Voltar</button>
+                                    <button type="submit" disabled={isSubmitting || formData.rating === 0} className="flex items-center bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-emerald-900/50 transition-all transform hover:scale-105 disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed">
+                                        {isSubmitting ? 'Salvando...' : <><IconSave className="mr-2 w-5 h-5" /> Finalizar</>}
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </form>
+                    <div className="mt-6 text-center text-slate-500 text-xs flex items-center justify-center gap-2"><IconRotateCcw className="w-3 h-3" /> Sincronização automática ativa.</div>
+                </div>
+            );
+        };
 
         // KPICard
         const KPICard = ({ data }) => {
@@ -308,33 +497,21 @@
             return null;
         };
 
-        const ChartsSection = ({ motivationData, spendData }) => {
-            // Acessa o Recharts globalmente DENTRO do componente para garantir que o script já carregou
+        const ChartsSection = ({ motivationData, spendData, socialAnalysis, financialAnalysis }) => {
             const Recharts = window.Recharts;
+            if (!Recharts) return <div className="p-6 text-center text-red-300">Erro: Gráficos não carregaram.</div>;
 
-            // Se ainda não carregou, exibe erro ou loading (mas não quebra a tela)
-            if (!Recharts) {
-                return (
-                    <div className="col-span-1 lg:col-span-2 bg-red-900/20 border border-red-800 rounded-xl p-6 text-center text-red-300">
-                        <p>Erro: A biblioteca de gráficos não pôde ser carregada. Tente recarregar a página.</p>
-                    </div>
-                );
-            }
-
-            const { 
-                BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, 
-                PieChart, Pie, Legend 
-            } = Recharts;
+            const { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } = Recharts;
 
             return (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     {/* Gráfico 1 */}
-                    <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg">
+                    <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg flex flex-col">
                         <h4 className="text-lg font-semibold text-slate-100 mb-6 flex items-center">
                             <span className="w-1 h-6 bg-emerald-500 rounded mr-3"></span>
                             Motivação Principal da Viagem
                         </h4>
-                        <div className="h-64 w-full">
+                        <div className="h-64 w-full mb-6">
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart layout="vertical" data={motivationData} margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
                                     <CartesianGrid strokeDasharray="3 3" stroke="#334155" horizontal={false} />
@@ -347,15 +524,22 @@
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
+                        <div className="mt-auto pt-4 border-t border-slate-700 flex items-start gap-3">
+                            <div className="p-2 bg-slate-900/50 rounded-lg"><IconUsers className="w-4 h-4 text-emerald-400" /></div>
+                            <div>
+                                <h5 className="text-sm font-semibold text-slate-200 mb-1">Impacto Social</h5>
+                                <p className="text-sm text-slate-400 leading-relaxed">{socialAnalysis}</p>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Gráfico 2 */}
-                    <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg">
+                    <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg flex flex-col">
                         <h4 className="text-lg font-semibold text-slate-100 mb-6 flex items-center">
                             <span className="w-1 h-6 bg-blue-500 rounded mr-3"></span>
                             Distribuição de Gastos (R$)
                         </h4>
-                        <div className="h-64 w-full">
+                        <div className="h-64 w-full mb-6">
                             <ResponsiveContainer width="100%" height="100%">
                                 <PieChart>
                                     <Pie data={spendData} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="amount" nameKey="category">
@@ -366,6 +550,13 @@
                                 </PieChart>
                             </ResponsiveContainer>
                         </div>
+                         <div className="mt-auto pt-4 border-t border-slate-700 flex items-start gap-3">
+                            <div className="p-2 bg-slate-900/50 rounded-lg"><IconArrowUp className="w-4 h-4 text-blue-400" /></div>
+                            <div>
+                                <h5 className="text-sm font-semibold text-slate-200 mb-1">Impacto Financeiro</h5>
+                                <p className="text-sm text-slate-400 leading-relaxed">{financialAnalysis}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             );
@@ -375,8 +566,9 @@
         const App = () => {
             const [selectedEventId, setSelectedEventId] = useState('guns-n-roses');
             const [data, setData] = useState(EVENT_DATABASE['guns-n-roses']);
+            const [viewMode, setViewMode] = useState('dashboard'); // 'dashboard' | 'collection'
             const [aiInsights, setAiInsights] = useState('');
-            const [aiLoading, setAiLoading] = useState('IDLE'); // IDLE, LOADING, SUCCESS, ERROR
+            const [aiLoading, setAiLoading] = useState('IDLE'); 
 
             useEffect(() => {
                 if (EVENT_DATABASE[selectedEventId]) {
@@ -411,6 +603,7 @@
                         KPIs: ${JSON.stringify(data.kpis)}
                         Motivação: ${JSON.stringify(data.motivations)}
                         Gastos: ${JSON.stringify(data.spending)}
+                        Análise de Contexto: ${data.analysis.context}
                         
                         Responda em Markdown. Seja breve (máximo 3 bullets).
                     `;
@@ -437,14 +630,48 @@
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <div className="flex justify-between items-center h-20">
                                 <div>
-                                    <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">MTData</h1>
-                                    <p className="text-xs text-slate-400 uppercase tracking-widest mt-1">Intelligence • Mato Grosso</p>
+                                    <img 
+                                        src="/logo.png" 
+                                        alt="MTData Intelligence" 
+                                        className="h-16 w-auto object-contain cursor-pointer"
+                                        onClick={() => setViewMode('dashboard')}
+                                        onError={(e) => {
+                                            e.currentTarget.style.display = 'none';
+                                            const fallback = document.getElementById('logo-fallback');
+                                            if (fallback) fallback.classList.remove('hidden');
+                                        }}
+                                    />
+                                    <div id="logo-fallback" className="hidden cursor-pointer" onClick={() => setViewMode('dashboard')}>
+                                        <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">MTData</h1>
+                                        <p className="text-xs text-slate-400 uppercase tracking-widest mt-1">Intelligence • Mato Grosso</p>
+                                    </div>
                                 </div>
+                                
                                 <div className="flex gap-3">
-                                    <button onClick={handleExport} className="hidden sm:flex items-center px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-lg border border-slate-700 transition-colors">
-                                        <IconDownload className="w-4 h-4 mr-2" /> Exportar
-                                    </button>
-                                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-xs shadow-lg ring-2 ring-slate-900">MT</div>
+                                    {/* MODO TOGGLE */}
+                                    <div className="flex bg-slate-800 rounded-lg p-1 border border-slate-700">
+                                        <button
+                                            onClick={() => setViewMode('dashboard')}
+                                            className={`flex items-center px-3 py-1.5 rounded-md text-sm font-medium transition-all ${viewMode === 'dashboard' ? 'bg-slate-700 text-white shadow-sm' : 'text-slate-400 hover:text-slate-200'}`}
+                                        >
+                                            <IconLayoutDashboard className="w-4 h-4 mr-2" />
+                                            Dashboard
+                                        </button>
+                                        <button
+                                            onClick={() => setViewMode('collection')}
+                                            className={`flex items-center px-3 py-1.5 rounded-md text-sm font-medium transition-all ${viewMode === 'collection' ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/50 shadow-sm' : 'text-slate-400 hover:text-slate-200'}`}
+                                        >
+                                            <IconClipboardList className="w-4 h-4 mr-2" />
+                                            Coletar Dados
+                                        </button>
+                                    </div>
+
+                                    {viewMode === 'dashboard' && (
+                                        <button onClick={handleExport} className="hidden sm:flex items-center px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-lg border border-slate-700 transition-colors">
+                                            <IconDownload className="w-4 h-4 mr-2" /> Exportar
+                                        </button>
+                                    )}
+                                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-xs shadow-lg ring-2 ring-slate-900 ml-2">MT</div>
                                 </div>
                             </div>
                         </div>
@@ -453,102 +680,134 @@
                     {/* Conteúdo */}
                     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
                         
-                        {/* Filtros */}
-                        <section className="bg-slate-800 rounded-xl p-4 mb-8 shadow-sm border border-slate-700 flex flex-col md:flex-row gap-4 items-center justify-between">
-                            <div className="flex items-center gap-2 text-slate-300 font-medium">
-                                <IconFilter className="w-5 h-5 text-emerald-500" />
-                                <span>Evento:</span>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full md:w-2/3">
-                                <select 
-                                    className="bg-slate-900 border border-slate-600 text-slate-200 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-full p-2.5"
-                                    value={selectedEventId}
-                                    onChange={(e) => setSelectedEventId(e.target.value)}
-                                >
-                                    <option value="guns-n-roses">Show Guns N' Roses (Arena)</option>
-                                    <option value="cuiaba-flamengo">Cuiabá EC x Flamengo (Série A)</option>
-                                    <option value="gustavo-lima">Buteco Gustavo Lima</option>
-                                    <option value="festival-inverno">Festival de Inverno (Chapada)</option>
-                                    <option value="stock-car">Stock Car Pro Series</option>
-                                    <option value="natanzinho">Show Natanzinho</option>
-                                </select>
-                                <div className="flex items-center px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-slate-400 text-sm">
-                                    <span className="mr-2 text-emerald-500 font-semibold">Local:</span>
-                                    {data.city}
-                                </div>
-                            </div>
-                        </section>
+                        {viewMode === 'dashboard' ? (
+                            <>
+                                {/* DASHBOARD VIEW */}
+                                <section className="bg-slate-800 rounded-xl p-4 mb-6 shadow-sm border border-slate-700 flex flex-col md:flex-row gap-4 items-center justify-between">
+                                    <div className="flex items-center gap-2 text-slate-300 font-medium">
+                                        <IconFilter className="w-5 h-5 text-emerald-500" />
+                                        <span>Evento:</span>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full md:w-2/3">
+                                        <select 
+                                            className="bg-slate-900 border border-slate-600 text-slate-200 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-full p-2.5"
+                                            value={selectedEventId}
+                                            onChange={(e) => setSelectedEventId(e.target.value)}
+                                        >
+                                            <option value="guns-n-roses">Show Guns N' Roses</option>
+                                            <option value="cuiaba-flamengo">Cuiabá EC x Flamengo</option>
+                                            <option value="gustavo-lima">Buteco Gustavo Lima</option>
+                                            <option value="festival-inverno">Festival de Inverno</option>
+                                            <option value="stock-car">Stock Car Pro Series</option>
+                                            <option value="natanzinho">Show Natanzinho</option>
+                                        </select>
+                                        <div className="flex items-center px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-slate-400 text-sm">
+                                            <span className="mr-2 text-emerald-500 font-semibold">Local:</span>
+                                            {data.city}
+                                        </div>
+                                    </div>
+                                </section>
 
-                        {/* Botão IA */}
-                        <div className="flex justify-end mb-6">
-                            <button 
-                                onClick={handleGenerateInsights}
-                                disabled={aiLoading === 'LOADING'}
-                                className={`flex items-center px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-lg ${aiLoading === 'LOADING' ? 'bg-slate-700 text-slate-400' : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500'}`}
-                            >
-                                <IconSparkles className={`w-4 h-4 mr-2 ${aiLoading === 'LOADING' ? 'animate-spin' : ''}`} />
-                                {aiLoading === 'LOADING' ? 'Analisando...' : 'Gerar Análise IA'}
-                            </button>
-                        </div>
-
-                        {/* Resultado IA */}
-                        {aiInsights && (
-                            <div className="bg-slate-800/50 border border-purple-500/30 rounded-xl p-6 mb-8 animate-[fadeIn_0.5s_ease-out]">
-                                <div className="flex items-center mb-4">
-                                    <IconSparkles className="w-5 h-5 text-purple-400 mr-2" />
-                                    <h3 className="text-lg font-bold text-slate-100">Insights Estratégicos</h3>
+                                {/* Context Card */}
+                                <div className="bg-slate-800/60 border border-slate-700 rounded-xl p-6 mb-8 relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
+                                    <div className="flex items-start gap-3">
+                                        <IconInfo className="w-5 h-5 text-emerald-400 mt-1 flex-shrink-0" />
+                                        <div>
+                                            <h3 className="text-md font-bold text-slate-100 mb-1">Contexto do Evento</h3>
+                                            <p className="text-slate-300 text-sm leading-relaxed max-w-4xl">{data.analysis.context}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div 
-                                    className="prose prose-invert prose-sm max-w-none text-slate-300"
-                                    dangerouslySetInnerHTML={{ __html: md.render(aiInsights) }} 
+
+                                <div className="flex justify-end mb-6">
+                                    <button 
+                                        onClick={handleGenerateInsights}
+                                        disabled={aiLoading === 'LOADING'}
+                                        className={`flex items-center px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-lg ${aiLoading === 'LOADING' ? 'bg-slate-700 text-slate-400' : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500'}`}
+                                    >
+                                        <IconSparkles className={`w-4 h-4 mr-2 ${aiLoading === 'LOADING' ? 'animate-spin' : ''}`} />
+                                        {aiLoading === 'LOADING' ? 'Analisando...' : 'Gerar Análise IA'}
+                                    </button>
+                                </div>
+
+                                {aiInsights && (
+                                    <div className="bg-slate-800/50 border border-purple-500/30 rounded-xl p-6 mb-8 animate-[fadeIn_0.5s_ease-out]">
+                                        <div className="flex items-center mb-4">
+                                            <IconSparkles className="w-5 h-5 text-purple-400 mr-2" />
+                                            <h3 className="text-lg font-bold text-slate-100">Insights Estratégicos</h3>
+                                        </div>
+                                        <div className="prose prose-invert prose-sm max-w-none text-slate-300" dangerouslySetInnerHTML={{ __html: md.render(aiInsights) }} />
+                                    </div>
+                                )}
+
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                                    {data.kpis.map((kpi) => <KPICard key={kpi.id} data={kpi} />)}
+                                </div>
+
+                                <ChartsSection 
+                                    motivationData={data.motivations} 
+                                    spendData={data.spending} 
+                                    socialAnalysis={data.analysis.socialImpact}
+                                    financialAnalysis={data.analysis.financialImpact}
                                 />
+
+                                <section className="bg-slate-800 border border-slate-700 rounded-xl shadow-lg overflow-hidden mb-12">
+                                    <div className="px-6 py-4 border-b border-slate-700 bg-slate-800/50 flex justify-between items-center">
+                                        <h3 className="text-lg font-semibold text-slate-100">Fluxo por Origem e Permanência</h3>
+                                        <span className="text-xs text-slate-500 uppercase font-bold tracking-wider">Consolidado</span>
+                                    </div>
+                                    <div className="overflow-x-auto">
+                                        <table className="w-full text-sm text-left text-slate-400">
+                                            <thead className="text-xs text-slate-300 uppercase bg-slate-900/50">
+                                                <tr>
+                                                    <th className="px-6 py-3">Origem</th>
+                                                    <th className="px-6 py-3">Participantes</th>
+                                                    <th className="px-6 py-3">Gasto Médio</th>
+                                                    <th className="px-6 py-3">Permanência</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {data.origins.map((origin, idx) => (
+                                                    <tr key={idx} className="bg-slate-800 border-b border-slate-700 hover:bg-slate-700/50">
+                                                        <td className="px-6 py-4 font-medium text-slate-100">{origin.state}</td>
+                                                        <td className="px-6 py-4">{origin.participants.toLocaleString('pt-BR')}</td>
+                                                        <td className="px-6 py-4">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(origin.avgSpend)}</td>
+                                                        <td className="px-6 py-4">
+                                                            <div className="flex items-center">
+                                                                <span className="w-16 bg-slate-700 rounded-full h-1.5 mr-2">
+                                                                    <span className="bg-emerald-500 h-1.5 rounded-full block" style={{width: `${Math.min((origin.stayDays / 7) * 100, 100)}%`}}></span>
+                                                                </span>
+                                                                {origin.stayDays.toFixed(1)} dias
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </section>
+                            </>
+                        ) : (
+                            // COLLECTION VIEW
+                            <div className="animate-[fadeIn_0.5s_ease-out]">
+                                <div className="mb-6 flex justify-center">
+                                    <select 
+                                        className="bg-slate-800 border border-slate-600 text-slate-200 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-2.5 max-w-sm"
+                                        value={selectedEventId}
+                                        onChange={(e) => setSelectedEventId(e.target.value)}
+                                    >
+                                        <option value="guns-n-roses">Show Guns N' Roses</option>
+                                        <option value="cuiaba-flamengo">Cuiabá EC x Flamengo</option>
+                                        <option value="gustavo-lima">Buteco Gustavo Lima</option>
+                                        <option value="festival-inverno">Festival de Inverno</option>
+                                        <option value="stock-car">Stock Car Pro Series</option>
+                                        <option value="natanzinho">Show Natanzinho</option>
+                                    </select>
+                                </div>
+                                <CollectionForm eventName={data.name} city={data.city} />
                             </div>
                         )}
-
-                        {/* KPIs */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                            {data.kpis.map((kpi) => <KPICard key={kpi.id} data={kpi} />)}
-                        </div>
-
-                        {/* Gráficos */}
-                        <ChartsSection motivationData={data.motivations} spendData={data.spending} />
-
-                        {/* Tabela de Origem */}
-                        <section className="bg-slate-800 border border-slate-700 rounded-xl shadow-lg overflow-hidden mb-12">
-                            <div className="px-6 py-4 border-b border-slate-700 bg-slate-800/50 flex justify-between items-center">
-                                <h3 className="text-lg font-semibold text-slate-100">Fluxo por Origem e Permanência</h3>
-                                <span className="text-xs text-slate-500 uppercase font-bold tracking-wider">Consolidado</span>
-                            </div>
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-sm text-left text-slate-400">
-                                    <thead className="text-xs text-slate-300 uppercase bg-slate-900/50">
-                                        <tr>
-                                            <th className="px-6 py-3">Origem</th>
-                                            <th className="px-6 py-3">Participantes</th>
-                                            <th className="px-6 py-3">Gasto Médio</th>
-                                            <th className="px-6 py-3">Permanência</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {data.origins.map((origin, idx) => (
-                                            <tr key={idx} className="bg-slate-800 border-b border-slate-700 hover:bg-slate-700/50">
-                                                <td className="px-6 py-4 font-medium text-slate-100">{origin.state}</td>
-                                                <td className="px-6 py-4">{origin.participants.toLocaleString('pt-BR')}</td>
-                                                <td className="px-6 py-4">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(origin.avgSpend)}</td>
-                                                <td className="px-6 py-4">
-                                                    <div className="flex items-center">
-                                                        <span className="w-16 bg-slate-700 rounded-full h-1.5 mr-2">
-                                                            <span className="bg-emerald-500 h-1.5 rounded-full block" style={{width: `${Math.min((origin.stayDays / 7) * 100, 100)}%`}}></span>
-                                                        </span>
-                                                        {origin.stayDays.toFixed(1)} dias
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </section>
                     </main>
 
                     <footer className="max-w-7xl mx-auto px-6 mt-12 text-center text-slate-500 text-sm">
