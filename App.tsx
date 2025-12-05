@@ -208,12 +208,27 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">
-                MTData
-              </h1>
-              <p className="text-xs text-slate-400 uppercase tracking-widest mt-1">
-                Intelligence • Eventos Mato Grosso
-              </p>
+              {/* LOGO REPLACEMENT */}
+              {/* Ensure you have a file named 'logo.png' in your public folder */}
+              <img 
+                src="/logo.png" 
+                alt="MTData Intelligence" 
+                className="h-16 w-auto object-contain"
+                onError={(e) => {
+                    // Fallback to text if image fails to load
+                    e.currentTarget.style.display = 'none';
+                    const fallback = document.getElementById('logo-fallback');
+                    if (fallback) fallback.classList.remove('hidden');
+                }}
+              />
+              <div id="logo-fallback" className="hidden">
+                  <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">
+                    MTData
+                  </h1>
+                  <p className="text-xs text-slate-400 uppercase tracking-widest mt-1">
+                    Intelligence • Eventos Mato Grosso
+                  </p>
+              </div>
             </div>
             <div className="flex gap-3">
                <button 
